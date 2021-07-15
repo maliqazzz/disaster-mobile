@@ -136,7 +136,7 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item light link  >
+            <v-list-item light link >
               <v-list-item-icon>
                 <v-img src="@/assets/icon/1.png" width="40px" class="float-left"/>
               </v-list-item-icon>
