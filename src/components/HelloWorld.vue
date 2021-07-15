@@ -1,93 +1,157 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col>
-
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
+    <v-dialog
+      ref="dialog"
+      v-model="modal"
+      :return-value.sync="date"
+      persistent
+      width="290px"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-text-field
+          v-model="date"
+          prepend-icon="mdi-calendar"
+          readonly
+          v-bind="attrs"
+          v-on="on"
+          class="ma-0 pa-0"
+        ></v-text-field>
+      </template>
+      <v-date-picker
+        v-model="date"
+        scrollable
       >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
+        <v-spacer></v-spacer>
+        <v-btn
+          text
+          color="primary"
+          @click="modal = false"
+        >
+          Cancel
+        </v-btn>
+        <v-btn
+          text
+          color="primary"
+          @click="$refs.dialog.save(date)"
+        >
+          OK
+        </v-btn>
+      </v-date-picker>
+    </v-dialog>
+    <v-list nav>
+      <v-list-item-group
+        v-model="activeList"
+        active-class="secondary--text"
       >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
+        <template >
 
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
+          <v-list-item light link  >
+            <v-list-item-icon>
+              <v-img src="@/assets/icon/2.png" width="40px" class="float-left"/>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-subtitle class="ml-2 text-left"><span class="highlightbencana">Vulcanic Eruption</span></v-list-item-subtitle>
+              <v-list-item-title light class="ml-2 text-left" @click="clickLiveMap()" >
+                <h4 class="subtitle-1">Lumajang - Jawa Timur</h4>
+              </v-list-item-title>
+              <v-list-item-subtitle class="ml-2 text-left">Reported: 4 hours ago</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
+          <v-list-item light link v-bind="attrs" v-on="on" >
+            <v-list-item-icon>
+              <v-img src="@/assets/icon/3.png" width="40px" class="float-left"/>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-subtitle class="ml-2 text-left"><span class="highlightbencana">Banjir</span></v-list-item-subtitle>
+              <v-list-item-title light class="ml-2 text-left" @click="clickLiveMap()" >
+                <h4 class="subtitle-1">DKI Jakarta</h4>
+              </v-list-item-title>
+              <v-list-item-subtitle class="ml-2 text-left">Reported: 2 hours ago</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
 
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
-      </v-col>
-    </v-row>
+          <v-list-item light link v-bind="attrs" v-on="on" >
+              <v-list-item-icon>
+              <v-img src="@/assets/icon/4.png" width="40px" class="float-left"/>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-subtitle class="ml-2 text-left"><span class="highlightbencana">Kebakaran Hutan</span></v-list-item-subtitle>
+              <v-list-item-title light class="ml-2 text-left" @click="clickLiveMap()" >
+                <h4 class="subtitle-1">Jambi</h4>
+              </v-list-item-title>
+              <v-list-item-subtitle class="ml-2 text-left">Reported: 5 hours ago</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item light link v-bind="attrs" v-on="on" >
+            <v-list-item-icon>
+              <v-img src="@/assets/icon/5.png" width="40px" class="float-left"/>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-subtitle class="ml-2 text-left"><span class="highlightbencana">Gempa Bumi</span></v-list-item-subtitle>
+              <v-list-item-title light class="ml-2 text-left" @click="clickLiveMap()" >
+                <h4 class="subtitle-1">Palu - Sulawesi Tengah</h4>
+              </v-list-item-title>
+              <v-list-item-subtitle class="ml-2 text-left">Reported: 4 hours ago</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item light link v-bind="attrs" v-on="on" >
+            <v-list-item-icon>
+              <v-img src="@/assets/icon/6.png" width="40px" class="float-left"/>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-subtitle class="ml-2 text-left"><span class="highlightbencana">Abrasion</span></v-list-item-subtitle>
+              <v-list-item-title light class="ml-2 text-left" @click="clickLiveMap()" >
+                <h4 class="subtitle-1">DKI Jakarta</h4>
+              </v-list-item-title>
+              <v-list-item-subtitle class="ml-2 text-left">Reported: 2 hours ago</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item light link v-bind="attrs" v-on="on" >
+            <v-list-item-icon>
+              <v-img src="@/assets/icon/7.png" width="40px" class="float-left"/>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-subtitle class="ml-2 text-left"><span class="highlightbencana">Kekeringan</span></v-list-item-subtitle>
+              <v-list-item-title light class="ml-2 text-left" @click="clickLiveMap()" >
+                <h4 class="subtitle-1">Palimanan</h4>
+              </v-list-item-title>
+              <v-list-item-subtitle class="ml-2 text-left">Reported: 7 hours ago</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+           <v-list-item light link v-bind="attrs" v-on="on" >
+              <v-list-item-icon>
+                <v-img src="@/assets/icon/8.png" width="40px" class="float-left"/>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-subtitle class="ml-2 text-left"><span class="highlightbencana">Longsor</span></v-list-item-subtitle>
+                <v-list-item-title light class="ml-2 text-left" @click="clickLiveMap()" >
+                  <h4 class="subtitle-1">Fakfak</h4>
+                </v-list-item-title>
+                <v-list-item-subtitle class="ml-2 text-left">Reported: 8 hours ago</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item light link  >
+              <v-list-item-icon>
+                <v-img src="@/assets/icon/1.png" width="40px" class="float-left"/>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-subtitle class="ml-2 text-left"><span class="highlightbencana">Puting Beliung</span></v-list-item-subtitle>
+                <v-list-item-title light class="ml-2 text-left"  >
+                  <h4 class="subtitle-1 ">Kota Pontianak - Kalimantan Barat</h4>
+                </v-list-item-title>
+                <v-list-item-subtitle class="ml-2 text-left">Reported: 8 hours ago</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+        </template>
+      </v-list-item-group>
+    </v-list>
   </v-container>
 </template>
 
@@ -96,6 +160,8 @@
     name: 'HelloWorld',
 
     data: () => ({
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      modal: false,
       ecosystem: [
         {
           text: 'vuetify-loader',
@@ -149,3 +215,6 @@
     }),
   }
 </script>
+<style>
+/*  */
+</style>
