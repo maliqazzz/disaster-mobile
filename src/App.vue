@@ -1,29 +1,32 @@
 <template>
+<div id="v-app">
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-      dense
-      class="justify-center"
-    >
-      <div class="d-flex align-center" style="position: absolute; left: 35%">
-        12 Bencana aktif
-      </div>
-    </v-app-bar>
-    <v-main>
-      <router-view/>
-    </v-main>
+    <Nav v-if="!['Login'].includes($route.name)" />
+    <router-view :key="$route.path"/>
+    <BotNav v-if="!['Login'].includes($route.name)" />
   </v-app>
+</div>
 </template>
 
 <script>
-
+import Nav from './components/Nav'
+import BotNav from './components/BotNav'
 export default {
-  name: 'App',
+  components: {
+    Nav,
+    BotNav
+  },
 
   data: () => ({
     //
   }),
 };
 </script>
+<style>
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+</style>
