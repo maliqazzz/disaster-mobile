@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Informasi from '../views/Informasi.vue'
 import Notifikasi from '../views/Notifikasi.vue'
-// import Statistik from '../views/Login.vue'
+import Statistik from '../views/statistik/Statistik.vue'
 // import Akun from '../views/Akun.vue'
 
 
@@ -31,11 +31,11 @@ const routes = [
     name: 'Notifikasi',
     component: Notifikasi
   },
-  // {
-  //   path: '/statistik',
-  //   name: 'Statistik',
-  //   component: Statistik
-  // },
+  {
+    path: '/statistik',
+    name: 'Statistik',
+    component: Statistik
+  },
   // {
   //   path: '/akun',
   //   name: 'Akun',

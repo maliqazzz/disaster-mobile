@@ -14,7 +14,7 @@
           readonly
           v-bind="attrs"
           v-on="on"
-          class="ma-0 pa-0"
+          class="mt-10"
         ></v-text-field>
       </template>
       <v-date-picker
