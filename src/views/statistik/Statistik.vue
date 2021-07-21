@@ -38,8 +38,8 @@
         </v-btn>
       </v-date-picker>
     </v-dialog>
-    <v-container class="mx-0">
-        <apexcharts width="350px" height="350px" type="line" :options="chartOptions" :series="series"></apexcharts>
+    <v-container class="mx-1">
+        <apexcharts width="330px" height="300px" type="line" :options="chartOptions" :series="series"></apexcharts>
     </v-container>
     <v-container class="mx-0">
         <kategori-ben/>
@@ -76,12 +76,12 @@ import Kabupaten from './Kabupaten.vue'
           id: 'basic-bar'
         },
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug']
         }
       },
       series: [{
         name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        data: [30000, 60000, 50000, 40000, 50000, 30000, 20000, 18000]
       }],
     }),
   }
