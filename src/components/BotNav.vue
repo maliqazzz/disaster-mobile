@@ -3,7 +3,7 @@
         :value="value"
         color="teal"
         grow
-        absolute
+        fixed
     >   
         <v-btn to="/home">
             <span>Bencana</span>
