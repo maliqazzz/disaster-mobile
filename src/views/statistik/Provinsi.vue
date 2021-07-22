@@ -4,8 +4,9 @@
         :items="desserts"
         :items-per-page="7"
         class="elevation-1"
-        style="width:350px"
+        style="width:390px"
         hide-default-footer="true"
+        mobile-breakpoint="0"
         dense
     ></v-data-table>
 </template>
@@ -25,7 +26,7 @@
             sortable: false,
             value: 'provinsi',
           },
-          { text: 'Jumlah', value: 'jumlah' },
+          { text: 'Jumlah', value: 'jumlah', align: 'end',},
         ],
         desserts: [
           {

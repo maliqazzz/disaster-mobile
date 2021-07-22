@@ -1,20 +1,20 @@
 {
-    "short_name": "Disaster",
-    "name": "I-Disaster",
+  "name": "I-Disaster",  
+  "short_name": "Disaster",
     "icons": [
       {
-        "src": "/images/icons/android-chrome-192x192.png",
+        "src": "/images/icons/bin.webp",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "/images/icons/android-chrome-512x512.png",
+        "src": "/images/icons/bin.webp",
         "type": "image/png",
         "sizes": "512x512"
       }
     ],
     "start_url": "/",
-    "background_color": "#3367D6",
-    "display": "standalone",
-    "theme_color": "#3367D6"
+    "background_color": "#263238",
+    "display": "fullscreen",
+    "theme_color": "#263238"
 }

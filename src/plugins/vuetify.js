@@ -26,6 +26,7 @@ export default new Vuetify({
                 error: colors.red.darken4,
                 gelapterang: colors.light
             },
+            bggrey: colors.grey.lighten3,
         },
     }
 });

@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid class="statistik">
     <v-dialog
       ref="dialog"
       v-model="modal"
@@ -8,14 +8,16 @@
       width="290px"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-text-field
-          v-model="date"
-          prepend-icon="mdi-calendar"
-          readonly
-          v-bind="attrs"
-          v-on="on"
-          class="mt-10"
-        ></v-text-field>
+        <v-card class="px-3 mx-0 mb-3" width="390">
+          <v-text-field
+            v-model="date"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+            class="mt-10"
+          ></v-text-field>
+        </v-card>
       </template>
       <v-date-picker
         v-model="date"
@@ -38,18 +40,30 @@
         </v-btn>
       </v-date-picker>
     </v-dialog>
-    <v-container class="mx-1">
-        <apexcharts width="330px" height="300px" type="line" :options="chartOptions" :series="series"></apexcharts>
-    </v-container>
-    <v-container class="mx-0">
-        <kategori-ben/>
-    </v-container>
-    <v-container class="mx-0">
-        <provinsi/>
-    </v-container>
-    <v-container class="mx-0 mb-12">
-        <kabupaten/>
-    </v-container>
+
+    <v-card class="mx-0 mb-3" width="390">
+      <div class="d-flex flex-row">
+        <v-col class="d-flex flex-column">
+          <span class="subtitle-2">Bencana</span>
+          <span class="text-h5">124</span>
+        </v-col>
+        <v-col class="d-flex flex-column">
+          <span class="subtitle-2">Provinsi</span>
+          <span class="text-h5">15</span>
+        </v-col>
+        <v-col class="d-flex flex-column">
+          <span class="subtitle-2">Kabupaten</span>
+          <span class="text-h5">2456</span>
+        </v-col>
+      </div>
+      <apexcharts width="370px" height="300px" type="line" :options="chartOptions" :series="series"></apexcharts>
+    </v-card>
+
+    <kategori-ben class="mx-0 mb-3"/>
+    
+    <provinsi class="mx-0 mb-3"/>
+
+    <kabupaten class="mx-0 mb-15"/>
     
   </v-container>
 </template>
@@ -87,5 +101,12 @@ import Kabupaten from './Kabupaten.vue'
   }
 </script>
 <style>
-/*  */
+.statistik {
+  background-color: #eee;
+  height: 100%;
+  width: 100%;
+}
+.pick-tgl{
+  background-color: #fff;
+}
 </style>
