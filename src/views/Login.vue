@@ -23,9 +23,9 @@
       <v-container class="kolomtxt">
         <v-card class="d-flex flex-column" width="100%" color="transparent" flat>
           <!-- <form @submit.prevent="handleSubmit"> -->
-            <v-text-field outlined dark dense full-width required class="usr mb-4" label="username" hide-details="auto" v-model="username" prepend-icon="mdi-account" :rules="rules" v-on:click="messagemsg = ''"/>
+            <v-text-field outlined dark dense full-width required class="mb-4" label="username" hide-details="auto" v-model="username" prepend-icon="mdi-account" :rules="rules" v-on:click="messagemsg = ''"/>
         
-            <v-text-field outlined dark dense full-width class="psw mb-6" label="password" hide-details="auto" prepend-icon="mdi-lock" v-model="password" required :rules="rulespassword" :type="typetext" :append-icon="icontext" @click:append="(e)=>handleappend(e)" :error-messages="messagemsg == 'User or Password not match' ? 'User or Password not match' : ''" v-on:click="messagemsg = ''"/>
+            <v-text-field outlined dark dense full-width class="mb-6" label="password" hide-details="auto" prepend-icon="mdi-lock" v-model="password" required :rules="rulespassword" :type="typetext" :append-icon="icontext" @click:append="(e)=>handleappend(e)" :error-messages="messagemsg == 'User or Password not match' ? 'User or Password not match' : ''" v-on:click="messagemsg = ''"/>
             
             <v-btn style="width:100%;" class="mb-2" type="submit" v-on:click="validate" :disabled="username == '' || password == '' ? true : false">Submit</v-btn>
             
@@ -231,14 +231,6 @@ export default {
 
   .kolomtxt {
     bottom: 5%;
-    position: absolute;
-  }
-
-  .usr {
-    position: absolute;
-  }
-
-  .psw {
     position: absolute;
   }
 
