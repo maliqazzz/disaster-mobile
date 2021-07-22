@@ -16,7 +16,7 @@
       color="transparent"
       elevation="0"
       to="/home"
-      v-if="!['/home'].includes($route.name)"
+      v-if="!['Home'].includes($route.name)"
     >
       <v-icon>
         mdi-arrow-left
