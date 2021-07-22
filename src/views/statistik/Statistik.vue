@@ -56,7 +56,7 @@
           <span class="text-h5">2456</span>
         </v-col>
       </div>
-      <apexcharts width="350px" height="300px" type="line" :options="chartOptions" :series="series"></apexcharts>
+      <apexcharts width="340px" height="300px" type="line" :options="chartOptions" :series="series"></apexcharts>
     </v-card>
 
     <kategori-ben class="mx-0 mb-3"/>
