@@ -5,7 +5,8 @@ import Login from '../views/Login.vue'
 import Informasi from '../views/Informasi.vue'
 import Notifikasi from '../views/Notifikasi.vue'
 import Statistik from '../views/statistik/Statistik.vue'
-// import Akun from '../views/Akun.vue'
+import DateRange from '../views/DateRange.vue'
+import About from '../views/About.vue'
 
 
 Vue.use(VueRouter)
@@ -36,11 +37,16 @@ const routes = [
     name: 'Statistik',
     component: Statistik
   },
-  // {
-  //   path: '/akun',
-  //   name: 'Akun',
-  //   component: Akun
-  // }
+  {
+    path: '/daterange',
+    name: 'DateRange',
+    component: DateRange
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About
+  }
 
 ]
 

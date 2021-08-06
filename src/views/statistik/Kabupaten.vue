@@ -1,11 +1,12 @@
 <template>
     <v-data-table
         :headers="headers"
-        :items="desserts"
-        :items-per-page="7"
+        :items="dataBencana"
         class="elevation-1"
+        fixed-header
+        height="265px"
         style="width:390px"
-        hide-default-footer="true"
+        hide-default-footer
         mobile-breakpoint="0"
         dense
     ></v-data-table>
@@ -15,9 +16,9 @@
 
   export default {
     name: 'Kabupaten',
-    components: {
-        // 
-    },
+    props: [
+      "rawDataBencana"
+    ],
     data: () => ({
        headers: [
           {
@@ -26,39 +27,46 @@
             sortable: false,
             value: 'kabupaten',
           },
-          { text: 'Jumlah', value: 'jumlah', align: 'end' },
+          { text: 'Jumlah', value: 'jumlah', sortable: true, align: 'end' },
         ],
-        desserts: [
-          {
-            kabupaten: 'Bogor',
-            jumlah: 12,
-          },
-          {
-            kabupaten: 'Sumedang',
-            jumlah: 4,
-          },
-          {
-            kabupaten: 'Ciamis',
-            jumlah: 5,
-          },
-          {
-            kabupaten: 'Cirebon',
-            jumlah: 5,
-          },
-          {
-            kabupaten: 'Kuningan',
-            jumlah: 3,
-          },
-          {
-            kabupaten: 'Bekasi',
-            jumlah: 2,
-          },
-          {
-            kabupaten: 'Sukabumi',
-            jumlah: 1,
-          },
-        ]
+        dataBencana: []
     }),
+    watch:{
+      rawDataBencana(e){
+        let vm = this
+        vm.compileData(e)
+      }
+    },
+    methods:{
+      compileData(data){
+        let vm = this
+        let buffer = []
+        let bufferCompiled={}
+        for (let i = 0; i < data.length; i++) {
+          const item = data[i];
+          // let Tanggal=item['Tanggal']
+          // let Kategori=item['Kategori']
+          // let Provinsi=item['Provinsi']
+          let Kabupaten=item['Kabupaten']
+
+          if (Object.hasOwnProperty.call(bufferCompiled, Kabupaten)) {
+            bufferCompiled[Kabupaten]++
+          } else {
+            bufferCompiled[Kabupaten]=1
+          }          
+        }
+        for (const kabupaten in bufferCompiled) {
+          buffer.push({kabupaten:kabupaten, jumlah:bufferCompiled[kabupaten]})
+        }
+        vm.dataBencana=buffer.sort(function(a,b){
+          return parseInt(b.jumlah) - parseInt(a.jumlah) ;
+        });
+      }
+    },
+    mounted(){
+      let vm = this
+      vm.compileData(vm.$props.rawDataBencana)
+    }
   }
 </script>
 <style>

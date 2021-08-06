@@ -23,10 +23,10 @@
             <v-icon>mdi-bell</v-icon>
         </v-btn>
 
-        <v-btn to="/akun">
-            <span>Akun</span>
+        <v-btn to="/about">
+            <span>About</span>
                 
-            <v-icon>mdi-account</v-icon>
+            <v-icon>mdi-information</v-icon>
         </v-btn>
     </v-bottom-navigation>
 </template>

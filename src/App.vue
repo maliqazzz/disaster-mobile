@@ -20,6 +20,31 @@ export default {
   data: () => ({
     //
   }),
+  watch:{
+    '$route.path':{
+      handler(after,before){
+        let vm = this
+        vm.$store.commit('setState', {state:'pathBefore', data: before})
+        console.log(before, after);
+      }
+    }
+  },
+  mounted(){
+    let vm = this
+    fetch('https://api.inplatform.online/disaster/license/license.json').then(response=>{
+      if (response.status==200) {
+        response.json().then(result=>{
+          let datanya = {
+            'key':"",
+            'expiredBy':""
+          }
+          datanya['key']=result['key']
+          datanya['expiredBy']=result['expiredBy']
+          vm.$store.commit('setState', {state:'licenseKey', data: datanya })
+        })
+      }
+    })
+  }
 };
 </script>
 <style>

@@ -1,10 +1,12 @@
 <template>
     <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="dataBencana"
         class="elevation-1"
         style="width:390px"
-        hide-default-footer="true"
+        fixed-header
+        height="265px"
+        hide-default-footer
         mobile-breakpoint="0"
         dense
     ></v-data-table>
@@ -14,9 +16,9 @@
 
   export default {
     name: 'KategoriBen',
-    components: {
-        // 
-    },
+    props: [
+      "rawDataBencana"
+    ],
     data: () => ({
        headers: [
           {
@@ -27,37 +29,44 @@
           },
           { text: 'Jumlah', value: 'jumlah', align: 'end' },
         ],
-        desserts: [
-          {
-            kategori: 'Banjir',
-            jumlah: 12,
-          },
-          {
-            kategori: 'Kebakaran Hutan',
-            jumlah: 4,
-          },
-          {
-            kategori: 'Gelombang Pasang',
-            jumlah: 5,
-          },
-          {
-            kategori: 'Kekeringan',
-            jumlah: 5,
-          },
-          {
-            kategori: 'Puting Beliung',
-            jumlah: 3,
-          },
-          {
-            kategori: 'Tanah Longsor',
-            jumlah: 2,
-          },
-          {
-            kategori: 'Gempa Bumi',
-            jumlah: 1,
-          },
-        ]
+        dataBencana: []
     }),
+    watch:{
+      rawDataBencana(e){
+        let vm = this
+        vm.compileData(e)
+      }
+    },
+    methods:{
+      compileData(data){
+        let vm = this
+        let buffer = []
+        let bufferCompiled={}
+        for (let i = 0; i < data.length; i++) {
+          const item = data[i];
+          // let Tanggal=item['Tanggal']
+          let Kategori=item['Kategori']
+          // let Provinsi=item['Provinsi']
+          // let Kabupaten=item['Kabupaten']
+
+          if (Object.hasOwnProperty.call(bufferCompiled, Kategori)) {
+            bufferCompiled[Kategori]++
+          } else {
+            bufferCompiled[Kategori]=1
+          }          
+        }
+        for (const kategori in bufferCompiled) {
+          buffer.push({kategori:kategori, jumlah:bufferCompiled[kategori]})
+        }
+        vm.dataBencana=buffer.sort(function(a,b){
+          return parseInt(b.jumlah) - parseInt(a.jumlah) ;
+        });
+      }
+    },
+    mounted(){
+      let vm = this
+      vm.compileData(vm.$props.rawDataBencana)
+    }
   }
 </script>
 <style>

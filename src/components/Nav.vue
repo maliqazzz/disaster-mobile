@@ -7,21 +7,31 @@
     dense
     class="justify-center"
   >
-    <!-- <div class="d-flex align-center" style="position: absolute; left: 35%">
-      12 Bencana aktif
-    </div> -->
-    <v-btn
-      tile
-      small
-      color="transparent"
-      elevation="0"
-      to="/home"
-      v-if="!['Home'].includes($route.name)"
-    >
-      <v-icon>
-        mdi-arrow-left
-      </v-icon>
-    </v-btn>
+  <v-row dense style="justify-content: center; ">
+    <v-col cols="2">
+      <v-btn
+        tile
+        small
+        color="transparent"
+        elevation="0"
+        @click="changePage()"
+        v-if="!['Home'].includes($route.name)"
+      >
+        <v-icon>
+          mdi-arrow-left
+        </v-icon>
+      </v-btn>
+    </v-col>
+    <v-col style="justify-content: center; ">
+      <div class="align-center">
+        {{navText}}
+      </div>
+    </v-col>
+    <v-col cols="2">
+    </v-col>
+  </v-row>
+    
+    
   </v-app-bar>
 </v-container> 
 </template>
@@ -32,8 +42,26 @@ export default {
   name: 'Nav',
 
   data: () => ({
-    //
+    navText:""
   }),
+  watch:{
+    '$store.state.navBarText':{
+      handler(e){
+        let vm = this
+        vm.navText=e
+      }
+    },
+  },
+  methods:{
+    changePage(){
+      let vm = this
+      vm.$router.push(vm.$store.state.pathBefore)
+    }
+  },
+  mounted(){
+    let vm = this
+    vm.navText=vm.$store.state.navBarText
+  }
 };
 </script>
 

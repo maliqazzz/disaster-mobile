@@ -23,15 +23,51 @@
       <v-container class="kolomtxt">
         <v-card class="d-flex flex-column" width="100%" color="transparent" flat>
           <!-- <form @submit.prevent="handleSubmit"> -->
-            <v-text-field outlined dark dense full-width required class="mb-4" label="username" hide-details="auto" v-model="username" prepend-icon="mdi-account" :rules="rules" v-on:click="messagemsg = ''"/>
+            <v-text-field 
+            outlined 
+            dark 
+            dense 
+            full-width 
+            required 
+            class="mb-4" 
+            label="Email" 
+            hide-details="auto" 
+            v-model="email" 
+            prepend-icon="mdi-account" 
+            :rules="rules" 
+            v-on:click="messagemsg = ''"/>
         
-            <v-text-field outlined dark dense full-width class="mb-6" label="password" hide-details="auto" prepend-icon="mdi-lock" v-model="password" required :rules="rulespassword" :type="typetext" :append-icon="icontext" @click:append="(e)=>handleappend(e)" :error-messages="messagemsg == 'User or Password not match' ? 'User or Password not match' : ''" v-on:click="messagemsg = ''"/>
+            <v-text-field 
+            outlined 
+            dark 
+            dense 
+            full-width 
+            class="mb-6" 
+            label="password" 
+            hide-details="auto" 
+            prepend-icon="mdi-lock" 
+            v-model="password" 
+            required 
+            :rules="rulespassword" 
+            :type="typetext" 
+            :append-icon="icontext" 
+            @click:append="(e)=>handleappend(e)" 
+            :error-messages="messagemsg.length>0 ? messagemsg : ''"
+            v-on:click="messagemsg = ''"/>
             
-            <v-btn style="width:100%;" class="mb-2" type="submit" v-on:click="validate" :disabled="username == '' || password == '' ? true : false">Submit</v-btn>
+            <v-btn 
+            style="width:100%;" 
+            class="mb-2" 
+            type="submit" 
+            v-on:click="validate" 
+            >Submit</v-btn>
             
-            <v-btn style="width:100%;" class="mb-4" v-on:click="dialog=true">Register</v-btn>
+            <!-- <v-btn 
+            style="width:100%;" 
+            class="mb-4" 
+            v-on:click="dialog=true">Register</v-btn> -->
 
-            <v-dialog v-model="dialog"  max-width="50%" >
+            <!-- <v-dialog v-model="dialog"  max-width="50%" >
               <v-card>
                   <v-col>
                       <v-text-field label="username" :rules="rulesusernameregister()" hide-details="auto" v-model="usernameregister"/>
@@ -48,17 +84,62 @@
                     </v-btn>
                   </v-col>
               </v-card>
-            </v-dialog>
+            </v-dialog> -->
             <v-dialog v-model="message" persistent max-width="177px" >
                 <v-card>
                     <v-col>
-                        {{messagemsg}}
+                        {{alertMsg}}
                     </v-col>
                     <v-col style>
                         <v-btn v-on:click="messageclose()" style="margin:auto" width="100%">
                             Close
                         </v-btn>
                     </v-col>
+                </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="otpDialog" persistent max-width="600px" >
+                <v-card>
+                  <v-container>
+                    <v-card-title>
+                      Enter Verification Code
+                    </v-card-title>
+                    <v-card-text>
+                      <v-row dense>
+                        <v-col >
+                            <p>We have sent a verification code to {{buffLogin.email}}, Please insert the code below</p>
+                        </v-col>
+                      </v-row>
+                      <v-row dense>
+                          <v-col
+                            cols="12"
+                        >
+                            <v-text-field
+                            v-model="editedToken"
+                            label="Verification Code"
+                            :error-messages="otpMessage.length>0 ? otpMessage : ''"
+                            ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-card-text>
+                    <v-card-action>
+                      <v-row dense>
+                        <v-col >
+                            <v-btn  style="margin:auto"  v-on:click="cancelOTP()">
+                                Cancel
+                            </v-btn>
+                        </v-col>
+                        <v-col >
+                            <v-btn  style="margin:auto" v-on:click="validateOTP()">
+                                Submit
+                            </v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-card-action>
+                    
+                  </v-container>
+                  
+                    
                 </v-card>
             </v-dialog>
           <!-- </form> -->
@@ -70,13 +151,21 @@
 
 <script>
 import _ from 'lodash'
+import dayjs from 'dayjs'
+import axios from 'axios'
+const short = require('short-uuid');
+const md5 = require('md5');
+var utc = require('dayjs/plugin/utc')
+dayjs.extend(utc)
 
 export default {
   components: {
   },
   data () {
     return {
-      username : "",
+      otpDialog:false,
+      email : "",
+      userName : "",
       password : "",
       usernameregister : "",
       passwordregister : "",
@@ -91,36 +180,124 @@ export default {
       ],
       message:false,
       messagemsg:"",
+      alertMsg:"",
+      otpMessage:"",
       dialog:false,
       rememberme:"",
       icontext:"mdi-eye",
-      typetext:"password"
+      typetext:"password",
+      oneTimeToken:"",
+      editedToken:"",
+      buffLogin:{}
     }
   },
   computed: {
   },
   methods: {
-    
+    cancelOTP(){
+      let vm =this
+      vm.otpDialog=false
+      vm.oneTimeToken=""
+      vm.editedToken=""
+      vm.buffLogin={}
+    },
+    validateOTP(){
+      let vm = this
+      console.log(vm.editedToken, vm.oneTimeToken);
+      if (vm.editedToken===vm.oneTimeToken) {
+        localStorage.setItem('token', JSON.stringify(vm.buffLogin.localToken))
+        sessionStorage.setItem('auth', 'true')
+        sessionStorage.setItem('loggedinas', vm.buffLogin.email)
+        // vm.$store.commit('setState', {state:'userRole', data: vm.buffLogin.role })        
+        vm.otpDialog=false
+        this.$router.push('/home')        
+      } else {
+        vm.otpMessage = "Verification Code incorrect"
+      }
+    },
+    sendMail(recipient, token, subject){
+      let vm = this
+      let toSend={
+        type:'emailVerif',
+        timestamp:dayjs().utc().format('YYYYMMDD HH:mm:ss ZZ'),
+        data:{
+          recipient:recipient,
+          token:token,
+          subject:subject,
+        }
+        
+      }
+      let filename= short().new()
+      const form = new FormData();
+      form.append('filename', filename + '.json');
+      form.append('file', JSON.stringify(toSend));            
+      axios.post("https://api.inplatform.online/disaster/loginVerification/",form)
+      .then(response=>{
+          if (response.status==201) {
+              vm.otpDialog=true
+          }                
+      })
+        
+    },
     validate(){
-      if(this.username != "" && this.password != ""){
-          if(localStorage.getItem('userdata') != undefined){
-              let getdata = localStorage.getItem('userdata')
-              let getdataparse = JSON.parse(getdata)
-              
-              // console.log(getdataparse)
-
-              let filter = _.filter(getdataparse, { 'username' : this.username, 'password' : this.password })
-
-              if(filter.length > 0){
+      let vm =this
+      if(vm.email != "" && vm.password != ""){
+          fetch('https://api.inplatform.online/disaster/user/'+vm.email+'.json').then(response=>{
+          if (response.status==200) {
+            response.json().then(result=>{
+              vm.buffLogin=result
+              if (md5(vm.password) == result.password && result.active) {
+                let localTokenRaw = localStorage.getItem('token')
+                let localTokenParsed = JSON.parse(localTokenRaw)
+                
+                let tokenSekali=short().new()
+                console.log(tokenSekali);
+                if (!localTokenParsed) {
+                  console.log(localTokenParsed);
+                  vm.oneTimeToken=tokenSekali
+                  vm.sendMail(result.email, tokenSekali, "Login from New Device")
+                  // localStorage.setItem('token', JSON.stringify(result.localToken))
+                }
+                else if(localTokenParsed && localTokenParsed !== result.localToken){
+                  vm.oneTimeToken=tokenSekali
+                  vm.sendMail(result.email, tokenSekali, "Login from New Device")
+                  // localStorage.setItem('token', JSON.stringify(result.localToken))
+                }
+                else{
+                  
                   sessionStorage.setItem('auth', 'true')
-                  sessionStorage.setItem('loggedinas', this.username)
+                  sessionStorage.setItem('loggedinas', result.email)
+                  // vm.$store.commit('setState', {state:'userRole', data: result.role })
                   this.$router.push('/home')
+                }
+                // 
               } else {
-                  this.messagemsg = 'User or Password not match'
+                this.messagemsg = 'User Or Password Is Incorrect!'
               }
-          } else {
-              this.messagemsg = 'User or Password not match'
-          } 
+            })
+          }
+          else{
+            this.messagemsg = 'User is Not Yet Registered!'
+          }
+        })
+          // if(localStorage.getItem('userdata') != undefined){
+          //     let getdata = localStorage.getItem('userdata')
+          //     let getdataparse = JSON.parse(getdata)
+              
+          //     // console.log(getdataparse)
+
+          //     let filter = _.filter(getdataparse, { 'username' : this.username, 'password' : this.password })
+
+          //     if(filter.length > 0){
+          //         sessionStorage.setItem('auth', 'true')
+          //         sessionStorage.setItem('loggedinas', this.username)
+          //         this.$router.push('/home')
+          //     } else {
+          //         this.messagemsg = 'User or Password not match'
+          //     }
+          // } else {
+          //     this.messagemsg = 'User or Password not match'
+          // } 
       }
     },
     register(){
