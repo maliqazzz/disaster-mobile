@@ -49,7 +49,7 @@
       </v-date-picker>
     </v-dialog> -->
 
-    <v-card class="mx-0 mb-3 mt-5" width="390">
+    <v-card class="mx-0 mb-3 mt-5" width="100%">
       <div class="d-flex flex-row">
         <v-col class="d-flex flex-column">
           <span class="subtitle-2">Bencana</span>
@@ -64,7 +64,9 @@
           <span class="text-h5">{{basicInfo.kab}}</span>
         </v-col>
       </div>
-      <apexcharts width="350px" height="300px" type="line" :options="chartOptions" :series="series"></apexcharts>
+      <v-card color="transparent" flat>
+        <apexcharts width="100%" height="300px" type="line" :options="chartOptions" :series="series"></apexcharts>
+      </v-card>
     </v-card>
 
     <kategori-ben v-bind:rawDataBencana="rawDataBencana" class="mx-0 mb-3"/>

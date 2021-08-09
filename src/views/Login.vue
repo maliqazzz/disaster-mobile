@@ -1,7 +1,7 @@
 <template>
   <div class="login" flat>
-      <v-container>
-        <v-layout class="d-flex flex-wrap mb-2 justify-xl-space-around ruangan">
+      <v-container class="d-flex justify-center">
+        <v-layout class="d-flex justify-center mb-2 ruangan">
           <v-card
             class="d-flex flex-wrap justify-start"
             width="700"

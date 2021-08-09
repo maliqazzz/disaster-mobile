@@ -9,7 +9,8 @@ export default new Vuex.Store({
 		dateType:['Active Disaster'],
 		pathBefore:"",
 		selectedDisaster:{},
-		licenseKey:''
+		licenseKey:'',
+		notification:[],
 	},
 	mutations: {
 		setState (state, newData) {
