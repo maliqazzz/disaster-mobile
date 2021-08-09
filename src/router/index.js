@@ -7,6 +7,7 @@ import Notifikasi from '../views/Notifikasi.vue'
 import Statistik from '../views/statistik/Statistik.vue'
 import DateRange from '../views/DateRange.vue'
 import About from '../views/About.vue'
+import NotifSetting from '../views/NotifSetting.vue'
 
 
 Vue.use(VueRouter)
@@ -46,8 +47,13 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About
+  },
+  {
+    path: '/notifsetting',
+    name: 'NotifSetting',
+    component: NotifSetting
   }
-
+  
 ]
 
 const router = new VueRouter({

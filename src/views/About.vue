@@ -1,25 +1,25 @@
 <template>
   <v-container class="about" fluid style="" fill-height>
-      <v-row class="mt-10 mb-2" style="justify-content: center; ">
+      <v-row class=" justify-center mt-10 mb-2" style="justify-content: center; ">
           <v-col>
           </v-col>
-          <v-col>
-            <v-img :src="iconBin" width="200" />
+          <v-col class="align-center  justify-center">
+                <v-img class="mx-auto" :src="iconBin" width="200" />
           </v-col>
           <v-col>
           </v-col>          
       </v-row>
-      <v-row style="justify-content: center; margin-top: -20vh;" dense>
+      <v-row class="align-center justify-center" style="justify-content: center; margin-top: -20vh;" dense>
           <v-col>
           </v-col>
-          <v-col>
-            <v-img :src="iconDisaster" width="200" />
+          <v-col  class="align-center justify-center" style="justify-content: center;">
+            <v-img class="mx-auto" :src="iconDisaster" width="200" />
           </v-col>
           <v-col>
           </v-col>          
       </v-row>
       <v-row style="justify-content: center; margin-top: -30vh;">
-          <h4 style="color: #E6B01C;">Disaster Monitoring, Early Warning<br>& Reporting System</h4>
+          <h4 class="justify-center" style="color: #E6B01C;">Disaster Monitoring, Early Warning<br>& Reporting System</h4>
       </v-row>
       <v-row style="justify-content: center; margin-top: -30vh;">
         <v-card max-width="90%">
@@ -52,6 +52,14 @@ export default {
         licenseKey:{}
     }),
     methods:{
+    },
+    watch:{
+        '$store.state.licenseKey':{
+            handler(e){
+                let vm =this
+                vm.licenseKey = e
+            }
+        }
     },
     mounted(){
         

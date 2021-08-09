@@ -28,6 +28,18 @@
       </div>
     </v-col>
     <v-col cols="2">
+      <v-btn
+        tile
+        small
+        color="transparent"
+        elevation="0"
+        to="/notifsetting"
+        v-if="$route.name.includes('Notifikasi')"
+      >
+        <v-icon>
+          mdi-cogs
+        </v-icon>
+      </v-btn>
     </v-col>
   </v-row>
     

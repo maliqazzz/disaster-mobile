@@ -20,7 +20,7 @@
           </v-card>
         </v-layout>
       </v-container>
-      <v-container class="kolomtxt">
+      <v-container class="kolomtxt" fluid>
         <v-card class="d-flex flex-column" width="100%" color="transparent" flat>
           <!-- <form @submit.prevent="handleSubmit"> -->
             <v-text-field 

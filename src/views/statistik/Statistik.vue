@@ -48,8 +48,42 @@
         </v-btn>
       </v-date-picker>
     </v-dialog> -->
+    <v-row class="mx-0 mt-7 ">
+      <v-col>
+        <v-card width="100%" min-width="20rem">
+          <div class="d-flex flex-row">
+            <v-col class="d-flex flex-column">
+              <span class="subtitle-2">Bencana</span>
+              <span class="text-h5">{{rawDataBencana.length}}</span>
+            </v-col>
+            <v-col class="d-flex flex-column">
+              <span class="subtitle-2">Provinsi</span>
+              <span class="text-h5">{{basicInfo.prov}}</span>
+            </v-col>
+            <v-col class="d-flex flex-column">
+              <span class="subtitle-2">Kabupaten</span>
+              <span class="text-h5">{{basicInfo.kab}}</span>
+            </v-col>
+          </div>
+          <apexcharts height="300px" type="line" :options="chartOptions" :series="series"></apexcharts>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row class="mx-0 mb-15">
+      <v-col>
+        <kategori-ben v-bind:rawDataBencana="rawDataBencana" />
+      </v-col>
+      <v-col>
+        <provinsi v-bind:rawDataBencana="rawDataBencana" />      
+      </v-col>
+      <v-col>
+        <kabupaten v-bind:rawDataBencana="rawDataBencana" />      
+      </v-col>
+    </v-row>
+    
+    
 
-    <v-card class="mx-0 mb-3 mt-5" width="100%">
+    <!-- <v-card class="mx-0 mb-3 mt-5" width="100%">
       <div class="d-flex flex-row">
         <v-col class="d-flex flex-column">
           <span class="subtitle-2">Bencana</span>
@@ -69,11 +103,10 @@
       </v-card>
     </v-card>
 
-    <kategori-ben v-bind:rawDataBencana="rawDataBencana" class="mx-0 mb-3"/>
+    <kategori-ben v-bind:rawDataBencana="rawDataBencana" class="mx-0 mb-3"/> -->
     
-    <provinsi v-bind:rawDataBencana="rawDataBencana" class="mx-0 mb-3"/>
+    
 
-    <kabupaten v-bind:rawDataBencana="rawDataBencana" class="mx-0 mb-15"/>
     
   </v-container>
 </template>
@@ -121,6 +154,7 @@ dayjs.extend(isSameOrBefore)
                 }  
             },
         chart: {
+          width: "100%",
           id: 'basic-bar'
         },
         xaxis: {

@@ -1,16 +1,17 @@
 <template>
-    <!-- <v-data-table
+    <v-data-table
         :headers="headers"
         :items="dataBencana"
         class="elevation-1"
         fixed-header
         height="265px"
-        style="width:390px"
+        style="width: 100%;
+              min-width: 20rem;"
         hide-default-footer
         mobile-breakpoint="0"
         dense
-    ></v-data-table> -->
-    <v-data-table
+    ></v-data-table>
+    <!-- <v-data-table
         :headers="headers"
         :items="dataBencana"
         class="elevation-1"
@@ -20,7 +21,7 @@
         hide-default-footer
         mobile-breakpoint="0"
         dense
-    ></v-data-table>
+    ></v-data-table> -->
 </template>
 
 <script>
